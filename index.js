@@ -232,6 +232,22 @@ $('#connectToMetamaskLandlord').click(async function (){
 	}
 });
 
+$('#connectToMetamaskTenant').click(async function (){
+	if(window.ethereum) {
+		window.web3 = new Web3(window.ethereum);
+		try {
+			const addresses = await window.ethereum.request({ method: 'eth_requestAccounts' });
+			const tenantAddress = addresses[0];
+			let tenants = [];
+
+			window.location.href = 'tenant/tenant-property.html	';
+
+		} catch (error) {
+            console.error("Error connecting to MetaMask:", error);
+        }
+	} 
+});
+
 async function checkAccessAndLogin() {
     try {
         const addresses = await window.ethereum.request({ method: 'eth_requestAccounts' });
