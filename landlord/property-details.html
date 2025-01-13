@@ -5,23 +5,8 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Manage Property Details</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/css/bootstrap.min.css" rel="stylesheet">
-    <style>
-        body {
-            background-color: #f9f5e9;
-        }
-        .table-container {
-            background-color: #fff;
-            border-radius: 8px;
-            padding: 20px;
-            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-        }
-        .footer {
-            margin-top: 30px;
-            background-color: #f4f4f4;
-            text-align: center;
-            padding: 20px;
-        }
-    </style>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.7.1/jquery.min.js" integrity="sha512-v2CJ7UaYy4JwqLDIrZUI/4hqeoQieOmAZNXBeQyjo21dadnwR+8ZaIJVT8EE2iyI61OV8e6M8PP2/4hpQINQ/g==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/web3/4.2.2/web3.min.js"></script>
 </head>
 <body>
 
@@ -31,7 +16,16 @@
     <h2 class="text-center mb-4">Manage Property Details</h2>
     
     <div class="mb-3 text-end">
-        <button class="btn btn-primary">+ Add Property Details</button>
+        <button class="btn btn-primary" id="addPropertyBtn">+ Add Property Details</button>
+    </div>
+
+    <div id="addPropertyForm" style="display: none;">
+        <input type="text" id="landlordName" placeholder="Landlord Name">
+        <input type="text" id="apartmentType" placeholder="Apartment Type">
+        <input type="number" id="totalArea" placeholder="Total Area (in Sqft.)">
+        <input type="text" id="location" placeholder="Location">
+        <input type="number" id="rentPerMonth" placeholder="Rent (per Month)">
+        <button id="submitProperty" class="btn btn-success">Add Property</button>
     </div>
     
     <div class="table-container">
@@ -44,44 +38,16 @@
                     <th>Total Area (in Sqft.)</th>
                     <th>Location</th>
                     <th>Rent (per Month)</th>
-                    <th>Actions</th>
                 </tr>
             </thead>
-            <tbody>
-                <tr>
-                    <td>2</td>
-                    <td>Vinod Khambe</td>
-                    <td>2 BHK</td>
-                    <td>130</td>
-                    <td>Andheri</td>
-                    <td>20000</td>
-                    <td>
-                        <button class="btn btn-sm btn-primary">
-                            <i class="bi bi-eye"></i>
-                        </button>
-                        <button class="btn btn-sm btn-success">
-                            <i class="bi bi-pencil"></i>
-                        </button>
-                        <button class="btn btn-sm btn-danger">
-                            <i class="bi bi-trash"></i>
-                        </button>
-                    </td>
-                </tr>
+            <tbody id="propertyList">
             </tbody>
         </table>
     </div>
 
 </div>
 
-<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/js/bootstrap.bundle.min.js"></script>
-<script>
-    fetch("landlord-navbar.html")
-        .then(response => response.text())
-        .then(data => {
-            document.getElementById("navbar").innerHTML = data;
-        })
-        .catch(error => console.error("Error loading navbar:", error));
-</script>
+<script src="landlord.js"></script>
 
 </body>
 </html>

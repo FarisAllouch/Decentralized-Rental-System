@@ -1,3 +1,10 @@
+fetch("tenant-navbar.html")
+.then(response => response.text())
+.then(data => {
+    document.getElementById("navbar").innerHTML = data;
+})
+.catch(error => console.error("Error loading navbar:", error)); 
+
 const abi = [
 	{
 		"inputs": [],
@@ -389,85 +396,46 @@ const abi = [
 		"type": "function"
 	}
 ];
-    const address = "0xf5502f23c9420652ff714ec7f9344b0515021211";
 
-    fetch("admin-navbar.html")
-    .then(response => response.text())
-    .then(data => {
-        document.getElementById("navbar").innerHTML = data;
-    })
-    .catch(error => console.error("Error loading navbar:", error));
-    
-$('#approve').click(async function() {
-    if (window.ethereum) {
+const address = "0xf5502f23c9420652ff714ec7f9344b0515021211";
+
+$('#addPropertyBtn').click(async function(){
+    if(window.ethereum) {
         window.web3 = new Web3(window.ethereum);
-        try {
-            const contract = new web3.eth.Contract(abi, address);
-            const test = await contract.methods.getPendingRequests().call();
-            console.log(test);
 
-        } catch (error) {
-        console.error("test:", error);
+        try{
+            const contract = new web3.eth.Contract(abi, address);
+            $("#addPropertyForm").toggle();
+        }catch (error) {
+            console.error("Error with MetaMask or contract interaction:", error);
+            alert('An error occurred. Please check the console.');
         }
     }
+
 });
 
-async function getPendingRequests() {
-    if (window.ethereum) {
+function loadProperties() {
+    if(window.ethereum) {
         window.web3 = new Web3(window.ethereum);
-        try {
-            const contract = new web3.eth.Contract(abi, address);
-            const requests = await contract.methods.getPendingRequests().call();
-            const addresses = await window.ethereum.request({ method: 'eth_requestAccounts' });
-            const currentUserAddress = addresses[0];
-            console.log("Access requirements:", requests);
-            
-            const tableBody = document.getElementById('pendingRequestsTable');
-            tableBody.innerHTML = '';
-
-            requests.forEach(async(address) => {
-                const row = document.createElement('tr');
-                const addressCell = document.createElement('td');
-
-                addressCell.textContent = address;
-
-                const actionCell = document.createElement('td');
-                const actionButton = document.createElement('button');
-                
-                const isApproved = await contract.methods.isLandlord(address).call();
-
-                actionButton.textContent = isApproved ? "Disapprove" : "Approve";
-                actionButton.className = "btn btn-sm btn-action";
-                actionButton.style.backgroundColor = isApproved ? "red" : "green";
-
-                actionButton.onclick = async () => {
-                    try {
-                        if (isApproved) {
-                            await contract.methods.revokeAccess(address).send({ from: currentUserAddress });
-                            alert(`Access revoked for ${address}`);
-                            actionButton.textContent = "Approve";
-                            actionButton.style.backgroundColor = "green";
-                        } else {
-                            await contract.methods.grantAccess(address).send({ from: currentUserAddress });
-                            alert(`Access granted to ${address}`);
-                            actionButton.textContent = "Disapprove";
-                            actionButton.style.backgroundColor = "red";
-                        }
-                    } catch (error) {
-                        console.error("Error toggling access:", error);
-                    }
-                };
-                actionCell.appendChild(actionButton);
-                row.appendChild(addressCell);
-                row.appendChild(actionCell);
-    
-                tableBody.appendChild(row);
-            })
-        } catch (error) {
-            console.error("Error getting request:", error);
-    }       }
+        $('#propertyList').empty();
+        const contract = new web3.eth.Contract(abi, address);
+                contract.methods.getProperties().call().then(properties => {
+                    properties.forEach(property => {
+                        const newRow = `
+                        <tr id="property-${property.id}">
+                            <td>${property.id}</td>
+                            <td>${property.landlordName}</td>
+                            <td>${property.apartmentType}</td>
+                            <td>${property.totalArea}</td>
+                            <td>${property.location}</td>
+                            <td>${property.rentPerMonth}</td>
+                        </tr>`;
+                    $('#propertyList').append(newRow);
+                    });
+                }).catch(error => {
+                    console.error("Error loading properties:", error);
+        });
+    }
 }
 
-window.onload = async function() {
-    await getPendingRequests();
-};
+loadProperties();

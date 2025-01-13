@@ -389,85 +389,30 @@ const abi = [
 		"type": "function"
 	}
 ];
-    const address = "0xf5502f23c9420652ff714ec7f9344b0515021211";
+const address= "0xf5502f23c9420652ff714ec7f9344b0515021211";
 
-    fetch("admin-navbar.html")
-    .then(response => response.text())
-    .then(data => {
-        document.getElementById("navbar").innerHTML = data;
-    })
-    .catch(error => console.error("Error loading navbar:", error));
-    
-$('#approve').click(async function() {
+$(document).on('click', '.btn-success', async function () {
+    const message = $('#exampleFormControlTextarea1').val();
+    if (!message.trim()) {
+        alert('Please enter your feedback.');
+        return;
+    }
+
     if (window.ethereum) {
-        window.web3 = new Web3(window.ethereum);
         try {
+            const web3 = new Web3(window.ethereum);
+            const accounts = await web3.eth.getAccounts();
             const contract = new web3.eth.Contract(abi, address);
-            const test = await contract.methods.getPendingRequests().call();
-            console.log(test);
 
+            await contract.methods.submitFeedback(message).send({ from: accounts[0] });
+
+            alert('Feedback submitted successfully!');
+            $('#exampleFormControlTextarea1').val('');
         } catch (error) {
-        console.error("test:", error);
+            console.error("Error submitting feedback:", error);
+            alert('An error occurred while submitting feedback.');
         }
+    } else {
+        alert('MetaMask is not connected!');
     }
 });
-
-async function getPendingRequests() {
-    if (window.ethereum) {
-        window.web3 = new Web3(window.ethereum);
-        try {
-            const contract = new web3.eth.Contract(abi, address);
-            const requests = await contract.methods.getPendingRequests().call();
-            const addresses = await window.ethereum.request({ method: 'eth_requestAccounts' });
-            const currentUserAddress = addresses[0];
-            console.log("Access requirements:", requests);
-            
-            const tableBody = document.getElementById('pendingRequestsTable');
-            tableBody.innerHTML = '';
-
-            requests.forEach(async(address) => {
-                const row = document.createElement('tr');
-                const addressCell = document.createElement('td');
-
-                addressCell.textContent = address;
-
-                const actionCell = document.createElement('td');
-                const actionButton = document.createElement('button');
-                
-                const isApproved = await contract.methods.isLandlord(address).call();
-
-                actionButton.textContent = isApproved ? "Disapprove" : "Approve";
-                actionButton.className = "btn btn-sm btn-action";
-                actionButton.style.backgroundColor = isApproved ? "red" : "green";
-
-                actionButton.onclick = async () => {
-                    try {
-                        if (isApproved) {
-                            await contract.methods.revokeAccess(address).send({ from: currentUserAddress });
-                            alert(`Access revoked for ${address}`);
-                            actionButton.textContent = "Approve";
-                            actionButton.style.backgroundColor = "green";
-                        } else {
-                            await contract.methods.grantAccess(address).send({ from: currentUserAddress });
-                            alert(`Access granted to ${address}`);
-                            actionButton.textContent = "Disapprove";
-                            actionButton.style.backgroundColor = "red";
-                        }
-                    } catch (error) {
-                        console.error("Error toggling access:", error);
-                    }
-                };
-                actionCell.appendChild(actionButton);
-                row.appendChild(addressCell);
-                row.appendChild(actionCell);
-    
-                tableBody.appendChild(row);
-            })
-        } catch (error) {
-            console.error("Error getting request:", error);
-    }       }
-}
-
-window.onload = async function() {
-    await getPendingRequests();
-};
