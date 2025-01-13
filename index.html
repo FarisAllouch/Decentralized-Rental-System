@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.7.1/jquery.min.js" integrity="sha512-v2CJ7UaYy4JwqLDIrZUI/4hqeoQieOmAZNXBeQyjo21dadnwR+8ZaIJVT8EE2iyI61OV8e6M8PP2/4hpQINQ/g==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/web3/4.2.2/web3.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"></script>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="index.css">
+    <title>Login</title>
+</head>
+<body>
+    <p>Please log in using MetaMask</p>
+    <p id="address" style="display: none;">Connected address: <span id="connectedAddress"></span></p>
+
+    <div class="login-form d-flex vh-100 flex-column">
+        <div class="container-fluid flex-grow-1 d-flex justify-content-center align-items-center">
+            <div class="row w-100 d-flex justify-content-center align-items-center">
+                <div class="col-md-9 col-lg-6 col-xl-5">
+                    <img src="https://mdbcdn.b-cdn.net/img/Photos/new-templates/bootstrap-login-form/draw2.webp"
+                        class="img-fluid" alt="Sample image">
+                </div>
+                <div class="col-md-8 col-lg-6 offset-xl-1">
+                    <form class="d-flex justify-content-between">
+                        <div class="text-center text-lg-start mt-4 pt-2">
+                            <button id="connectToMetamaskAdmin" type="button" data-mdb-button-init data-mdb-ripple-init class="btn btn-primary btn-lg"
+                                style="padding-left: 2.5rem; padding-right: 2.5rem;">Log in as admin</button>
+                        </div>
+
+                        <div class="text-center text-lg-start mt-4 pt-2">
+                            <button id="connectToMetamaskLandlord" type="button" data-mdb-button-init data-mdb-ripple-init class="btn btn-primary btn-lg"
+                                style="padding-left: 2.5rem; padding-right: 2.5rem;">Log in as landlord</button>
+                        </div>
+
+                        <div class="text-center text-lg-start mt-4 pt-2">
+                            <button id="connectToMetamask" type="button" data-mdb-button-init data-mdb-ripple-init class="btn btn-primary btn-lg"
+                                style="padding-left: 2.5rem; padding-right: 2.5rem;">Log in as tenant</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+        <div class="d-flex flex-column flex-md-row text-center text-md-start py-4 px-4 px-xl-5 bg-primary fixed-bottom">
+            <div class="text-white mb-md-0">
+                Copyright © 2025. All rights reserved.
+            </div>
+        </div>
+    </div>
+    
+</body>
+
+<script src="index.js"></script>
+
+</html>
