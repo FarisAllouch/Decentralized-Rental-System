@@ -46,97 +46,12 @@ const abi = [
 	{
 		"inputs": [
 			{
-				"internalType": "string",
-				"name": "_landlordName",
-				"type": "string"
-			},
-			{
-				"internalType": "string",
-				"name": "_apartmentType",
-				"type": "string"
-			},
-			{
-				"internalType": "uint256",
-				"name": "_totalArea",
-				"type": "uint256"
-			},
-			{
-				"internalType": "string",
-				"name": "_location",
-				"type": "string"
-			},
-			{
-				"internalType": "uint256",
-				"name": "_rentPerMonth",
-				"type": "uint256"
-			}
-		],
-		"name": "addProperty",
-		"outputs": [],
-		"stateMutability": "nonpayable",
-		"type": "function"
-	},
-	{
-		"inputs": [
-			{
 				"internalType": "address",
 				"name": "_user",
 				"type": "address"
 			}
 		],
-		"name": "grantAccess",
-		"outputs": [],
-		"stateMutability": "nonpayable",
-		"type": "function"
-	},
-	{
-		"anonymous": false,
-		"inputs": [
-			{
-				"indexed": true,
-				"internalType": "address",
-				"name": "tenant",
-				"type": "address"
-			},
-			{
-				"indexed": false,
-				"internalType": "uint256",
-				"name": "propertyId",
-				"type": "uint256"
-			}
-		],
-		"name": "InterestShown",
-		"type": "event"
-	},
-	{
-		"inputs": [],
-		"name": "requestAccess",
-		"outputs": [],
-		"stateMutability": "nonpayable",
-		"type": "function"
-	},
-	{
-		"inputs": [
-			{
-				"internalType": "address",
-				"name": "user",
-				"type": "address"
-			}
-		],
-		"name": "revokeAccess",
-		"outputs": [],
-		"stateMutability": "nonpayable",
-		"type": "function"
-	},
-	{
-		"inputs": [
-			{
-				"internalType": "string",
-				"name": "_message",
-				"type": "string"
-			}
-		],
-		"name": "submitFeedback",
+		"name": "_removePendingRequest",
 		"outputs": [],
 		"stateMutability": "nonpayable",
 		"type": "function"
@@ -149,55 +64,6 @@ const abi = [
 				"internalType": "address",
 				"name": "",
 				"type": "address"
-			}
-		],
-		"stateMutability": "view",
-		"type": "function"
-	},
-	{
-		"inputs": [
-			{
-				"internalType": "uint256",
-				"name": "",
-				"type": "uint256"
-			}
-		],
-		"name": "feedbacks",
-		"outputs": [
-			{
-				"internalType": "address",
-				"name": "sender",
-				"type": "address"
-			},
-			{
-				"internalType": "string",
-				"name": "message",
-				"type": "string"
-			}
-		],
-		"stateMutability": "view",
-		"type": "function"
-	},
-	{
-		"inputs": [],
-		"name": "getFeedbacks",
-		"outputs": [
-			{
-				"components": [
-					{
-						"internalType": "address",
-						"name": "sender",
-						"type": "address"
-					},
-					{
-						"internalType": "string",
-						"name": "message",
-						"type": "string"
-					}
-				],
-				"internalType": "struct SimpleElection.Feedback[]",
-				"name": "",
-				"type": "tuple[]"
 			}
 		],
 		"stateMutability": "view",
@@ -217,48 +83,16 @@ const abi = [
 		"type": "function"
 	},
 	{
-		"inputs": [],
-		"name": "getProperties",
-		"outputs": [
+		"inputs": [
 			{
-				"components": [
-					{
-						"internalType": "uint256",
-						"name": "id",
-						"type": "uint256"
-					},
-					{
-						"internalType": "string",
-						"name": "landlordName",
-						"type": "string"
-					},
-					{
-						"internalType": "string",
-						"name": "apartmentType",
-						"type": "string"
-					},
-					{
-						"internalType": "uint256",
-						"name": "totalArea",
-						"type": "uint256"
-					},
-					{
-						"internalType": "string",
-						"name": "location",
-						"type": "string"
-					},
-					{
-						"internalType": "uint256",
-						"name": "rentPerMonth",
-						"type": "uint256"
-					}
-				],
-				"internalType": "struct SimpleElection.Property[]",
-				"name": "",
-				"type": "tuple[]"
+				"internalType": "address",
+				"name": "_user",
+				"type": "address"
 			}
 		],
-		"stateMutability": "view",
+		"name": "grantAccess",
+		"outputs": [],
+		"stateMutability": "nonpayable",
 		"type": "function"
 	},
 	{
@@ -301,19 +135,6 @@ const abi = [
 	},
 	{
 		"inputs": [],
-		"name": "nextId",
-		"outputs": [
-			{
-				"internalType": "uint256",
-				"name": "",
-				"type": "uint256"
-			}
-		],
-		"stateMutability": "view",
-		"type": "function"
-	},
-	{
-		"inputs": [],
 		"name": "owner",
 		"outputs": [
 			{
@@ -345,51 +166,27 @@ const abi = [
 		"type": "function"
 	},
 	{
+		"inputs": [],
+		"name": "requestAccess",
+		"outputs": [],
+		"stateMutability": "nonpayable",
+		"type": "function"
+	},
+	{
 		"inputs": [
 			{
-				"internalType": "uint256",
-				"name": "",
-				"type": "uint256"
+				"internalType": "address",
+				"name": "user",
+				"type": "address"
 			}
 		],
-		"name": "properties",
-		"outputs": [
-			{
-				"internalType": "uint256",
-				"name": "id",
-				"type": "uint256"
-			},
-			{
-				"internalType": "string",
-				"name": "landlordName",
-				"type": "string"
-			},
-			{
-				"internalType": "string",
-				"name": "apartmentType",
-				"type": "string"
-			},
-			{
-				"internalType": "uint256",
-				"name": "totalArea",
-				"type": "uint256"
-			},
-			{
-				"internalType": "string",
-				"name": "location",
-				"type": "string"
-			},
-			{
-				"internalType": "uint256",
-				"name": "rentPerMonth",
-				"type": "uint256"
-			}
-		],
-		"stateMutability": "view",
+		"name": "revokeAccess",
+		"outputs": [],
+		"stateMutability": "nonpayable",
 		"type": "function"
 	}
 ];
-    const address = "0xf5502f23c9420652ff714ec7f9344b0515021211";
+    const address = "0x59e646001e8b900c624f07445ac7530ba03d4889";
 
     fetch("admin-navbar.html")
     .then(response => response.text())
